@@ -14,7 +14,7 @@ const Home = () => {
           <Text style={styles.titleDestinationText}>*** 가시나요?</Text>
         </View>
         <TouchableOpacity style={styles.startButton}>
-          <Text style={styles.startText}>출발하기</Text>
+          <Text style={styles.startButtonText}>출발하기</Text>
         </TouchableOpacity>
         <View style={styles.loginButtonContainer}>
           <TouchableOpacity style={styles.loginButton}>
@@ -64,7 +64,7 @@ const styles = StyleSheet.create({
     backgroundColor: COLOR.BLUE,
     borderRadius: 100,
   },
-  startText: {
+  startButtonText: {
     color: COLOR.WHITE,
     fontSize: 20,
   },
