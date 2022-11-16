@@ -9,11 +9,15 @@ export const COLOR = {
 };
 
 export const MESSAGE = {
-  DEPARTURE: "아래 사진과 같이\n출발 정류소 ID 5자리가 보이도록 촬영해주세요.",
-  SEARCH: "아래 사진과 같이\n버스 번호가 전부 보이도록 촬영해 주세요.",
+  GUIDE_DEPARTURE:
+    "아래 사진과 같이\n출발 정류소 ID 5자리가 보이도록 촬영해주세요.",
+  GUIDE_BUS_NUMBER:
+    "아래 사진과 같이\n버스 번호가 전부 보이도록 촬영해 주세요.",
+  CHECK_DEPARTURE: "출발지가 다음과 같습니까?",
+  CHECK_BUS_NUMBER: "버스 번호가 다음과 같습니까?",
 };
 
 export const GUIDE_IMAGE = {
   DEPARTURE: require("../assets/image/testImage.png"),
-  SEARCH: require("../assets/image/testImage.png"),
+  BUS_NUMBER: require("../assets/image/testImage.png"),
 };
