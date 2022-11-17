@@ -42,6 +42,7 @@ const styles = StyleSheet.create({
     backgroundColor: COLOR.BLACK,
   },
   checkText: {
+    marginBottom: 20,
     color: COLOR.WHITE,
     fontSize: 15,
   },

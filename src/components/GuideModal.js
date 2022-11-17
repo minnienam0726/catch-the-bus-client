@@ -16,7 +16,7 @@ const GuideModal = () => {
       <Modal animationType="slide" transparent={true}>
         <View style={styles.screenContainer}>
           <View style={styles.modalContainer}>
-            <Text style={styles.guideText}>{MESSAGE.DEPARTURE}</Text>
+            <Text style={styles.guideText}>{MESSAGE.GUIDE_DEPARTURE}</Text>
             <Image source={GUIDE_IMAGE.DEPARTURE} />
             <TouchableOpacity style={styles.checkButton}>
               <Text style={styles.checkButtonText}>확인</Text>
@@ -43,6 +43,7 @@ const styles = StyleSheet.create({
     backgroundColor: COLOR.BLACK,
   },
   guideText: {
+    marginBottom: 20,
     color: COLOR.WHITE,
     fontSize: 15,
   },
