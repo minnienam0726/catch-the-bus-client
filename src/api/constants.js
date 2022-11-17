@@ -20,6 +20,7 @@ export const MESSAGE = {
     "아래 사진과 같이\n버스 번호가 전부 보이도록 촬영해 주세요.",
   CHECK_DEPARTURE: "출발지가 다음과 같습니까?",
   CHECK_BUS_NUMBER: "버스 번호가 다음과 같습니까?",
+  RIDE_BUS: "이 버스를 탑승하세요!",
 };
 
 export const GUIDE_IMAGE = {
