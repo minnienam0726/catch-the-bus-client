@@ -8,17 +8,24 @@ import {
   TouchableOpacity,
 } from "react-native";
 
-import { COLOR, MESSAGE, GUIDE_IMAGE } from "../api/constants";
+import { COLOR } from "../api/constants";
 
-const GuideModal = () => {
+const GuideModal = ({ isGuideModalOpen, setIsGuideModalOpen }) => {
+  const MOCK_DATA = require("../assets/image/testImage.png");
+
   return (
     <View style={styles.screenContainer}>
-      <Modal animationType="slide" transparent={true}>
+      <Modal visible={isGuideModalOpen} animationType="fade" transparent={true}>
         <View style={styles.screenContainer}>
           <View style={styles.modalContainer}>
-            <Text style={styles.guideText}>{MESSAGE.GUIDE_DEPARTURE}</Text>
-            <Image source={GUIDE_IMAGE.DEPARTURE} />
-            <TouchableOpacity style={styles.checkButton}>
+            <Text style={styles.guideText}>
+              숫자 전체가 보이도록 촬영해주세요.
+            </Text>
+            <Image source={MOCK_DATA} />
+            <TouchableOpacity
+              style={styles.checkButton}
+              onPress={() => setIsGuideModalOpen(false)}
+            >
               <Text style={styles.checkButtonText}>확인</Text>
             </TouchableOpacity>
           </View>
@@ -41,6 +48,7 @@ const styles = StyleSheet.create({
     margin: 20,
     borderRadius: 20,
     backgroundColor: COLOR.BLACK,
+    opacity: 0.7,
   },
   guideText: {
     marginBottom: 20,

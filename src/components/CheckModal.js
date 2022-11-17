@@ -1,29 +1,63 @@
 import React from "react";
 import { View, Text, StyleSheet, Modal, TouchableOpacity } from "react-native";
 
-import { COLOR, MESSAGE } from "../api/constants";
+import { COLOR } from "../api/constants";
 
-const CheckModal = () => {
-  const MOCK_DATA = "방배역\n01-123";
+const CheckModal = ({
+  isCheckModalOpen,
+  setIsCheckModalOpen,
+  setNavigateArrival,
+  setIsSearchResultModalOpen,
+}) => {
+  const MOCK_DATA = {
+    STATION: "방배역\n01-123",
+    NUMBER: 1234,
+  };
+
+  const handleVerifyNumber = () => {
+    if (MOCK_DATA.NUMBER > 9999) {
+      return setNavigateArrival(true);
+    }
+
+    return setIsSearchResultModalOpen(true);
+  };
+
   return (
-    <View style={styles.screenContainer}>
-      <Modal animationType="slide" transparent={true}>
-        <View style={styles.screenContainer}>
-          <View style={styles.modalContainer}>
-            <Text style={styles.checkText}>{MESSAGE.CHECK_DEPARTURE}</Text>
-            <Text style={styles.returnValueText}>{MOCK_DATA}</Text>
-            <View style={styles.buttonsContainer}>
-              <TouchableOpacity style={styles.backButton}>
-                <Text style={styles.backButtonText}>다시</Text>
-              </TouchableOpacity>
-              <TouchableOpacity style={styles.checkButton}>
-                <Text style={styles.checkButtonText}>확인</Text>
-              </TouchableOpacity>
+    <>
+      <View style={styles.screenContainer}>
+        <Modal
+          visible={isCheckModalOpen}
+          animationType="fade"
+          transparent={true}
+        >
+          <View style={styles.screenContainer}>
+            <View style={styles.modalContainer}>
+              <Text style={styles.checkText}>
+                촬영한 번호가 아래와 같습니까?
+              </Text>
+              <Text style={styles.returnValueText}>{MOCK_DATA.STATION}</Text>
+              <View style={styles.buttonsContainer}>
+                <TouchableOpacity
+                  style={styles.backButton}
+                  onPress={() => setIsCheckModalOpen(false)}
+                >
+                  <Text style={styles.backButtonText}>다시</Text>
+                </TouchableOpacity>
+                <TouchableOpacity
+                  style={styles.checkButton}
+                  onPress={() => {
+                    handleVerifyNumber();
+                    setIsCheckModalOpen(false);
+                  }}
+                >
+                  <Text style={styles.checkButtonText}>확인</Text>
+                </TouchableOpacity>
+              </View>
             </View>
           </View>
-        </View>
-      </Modal>
-    </View>
+        </Modal>
+      </View>
+    </>
   );
 };
 
@@ -40,6 +74,7 @@ const styles = StyleSheet.create({
     padding: 20,
     borderRadius: 20,
     backgroundColor: COLOR.BLACK,
+    opacity: 0.7,
   },
   checkText: {
     marginBottom: 20,
