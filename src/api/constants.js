@@ -8,6 +8,11 @@ export const COLOR = {
   YELLOW: "#FFFF00",
 };
 
+export const TITLE = {
+  KEY_WORDS: "관련 검색어",
+  FAVORITES: "즐겨찾기 내역",
+};
+
 export const MESSAGE = {
   GUIDE_DEPARTURE:
     "아래 사진과 같이\n출발 정류소 ID 5자리가 보이도록 촬영해주세요.",
@@ -20,4 +25,9 @@ export const MESSAGE = {
 export const GUIDE_IMAGE = {
   DEPARTURE: require("../assets/image/testImage.png"),
   BUS_NUMBER: require("../assets/image/testImage.png"),
+};
+
+export const STAR = {
+  EMPTY_STAR: "☆",
+  FULFILLED_STAR: "★",
 };
