@@ -1,18 +1,33 @@
 import React from "react";
 import { View, Text, StyleSheet, Modal, TouchableOpacity } from "react-native";
 
-import { COLOR, MESSAGE } from "../api/constants";
+import { COLOR } from "../api/constants";
 
-const SearchResultModal = () => {
+const SearchResultModal = ({
+  isSearchResultModalOpen,
+  setIsSearchResultModalOpen,
+  setNavigateHome,
+}) => {
   const MOCK_DATA = "1001";
+
   return (
     <View style={styles.screenContainer}>
-      <Modal animationType="slide" transparent={true}>
+      <Modal
+        visible={isSearchResultModalOpen}
+        animationType="fade"
+        transparent={true}
+      >
         <View style={styles.screenContainer}>
           <View style={styles.modalContainer}>
-            <Text style={styles.guideText}>{MESSAGE.RIDE_BUS}</Text>
+            <Text style={styles.guideText}>이 버스를 탑승하세요!</Text>
             <Text style={styles.returnValueText}>{MOCK_DATA}</Text>
-            <TouchableOpacity style={styles.homeButton}>
+            <TouchableOpacity
+              style={styles.homeButton}
+              onPress={() => {
+                setNavigateHome(true);
+                setIsSearchResultModalOpen(false);
+              }}
+            >
               <Text style={styles.homeButtonText}>처음으로</Text>
             </TouchableOpacity>
           </View>
@@ -36,6 +51,7 @@ const styles = StyleSheet.create({
     margin: 20,
     borderRadius: 20,
     backgroundColor: COLOR.BLACK,
+    opacity: 0.7,
   },
   guideText: {
     marginBottom: 30,

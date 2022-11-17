@@ -3,31 +3,33 @@ import { View, Text, StyleSheet, Modal, TouchableOpacity } from "react-native";
 
 import { COLOR, STAR } from "../api/constants";
 
-const SearchListModal = ({
-  isSearchListModalOpen,
-  setIsSearchListModalOpen,
+const FavoritesListModal = ({
+  isFavoritesListModalOpen,
+  setIsFavoritesListModalOpen,
 }) => {
-  const MOCK_DATA = "방배역";
+  const MOCK_DATA = "삼성역";
 
   return (
     <View style={styles.screenContainer}>
       <Modal
-        visible={isSearchListModalOpen}
+        visible={isFavoritesListModalOpen}
         animationType="fade"
         transparent={true}
       >
         <View style={styles.screenContainer}>
           <View style={styles.modalContainer}>
-            <Text style={styles.titleText}>관련 검색어</Text>
+            <Text style={styles.titleText}>즐겨찾기 내역</Text>
             <View style={styles.returnValueContainer}>
               <Text style={styles.returnValueText}>{MOCK_DATA}</Text>
               <TouchableOpacity style={styles.favoriteButton}>
-                <Text style={styles.favoriteButtonText}>{STAR.EMPTY_STAR}</Text>
+                <Text style={styles.favoriteButtonText}>
+                  {STAR.FULFILLED_STAR}
+                </Text>
               </TouchableOpacity>
             </View>
             <TouchableOpacity
               style={styles.closeButton}
-              onPress={() => setIsSearchListModalOpen(false)}
+              onPress={() => setIsFavoritesListModalOpen(false)}
             >
               <Text style={styles.closeButtonText}>닫기</Text>
             </TouchableOpacity>
@@ -95,4 +97,4 @@ const styles = StyleSheet.create({
   },
 });
 
-export { SearchListModal };
+export { FavoritesListModal };

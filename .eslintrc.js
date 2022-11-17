@@ -29,6 +29,7 @@ module.exports = {
     sourceType: "module",
   },
   rules: {
+    "react/prop-types": "off",
     "no-unused-vars": "warn",
     "prettier/prettier": [
       "error",

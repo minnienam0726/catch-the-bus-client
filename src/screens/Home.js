@@ -4,7 +4,7 @@ import { SafeAreaView } from "react-native-safe-area-context";
 
 import { COLOR } from "../api/constants";
 
-const Home = () => {
+const Home = ({ navigation }) => {
   return (
     <SafeAreaView style={styles.container}>
       <View style={styles.screenContainer}>
@@ -13,7 +13,10 @@ const Home = () => {
           <Text style={styles.titleBusText}>버스 기사님,</Text>
           <Text style={styles.titleDestinationText}>*** 가시나요?</Text>
         </View>
-        <TouchableOpacity style={styles.startButton}>
+        <TouchableOpacity
+          style={styles.startButton}
+          onPress={() => navigation.navigate("Camera")}
+        >
           <Text style={styles.startButtonText}>출발하기</Text>
         </TouchableOpacity>
         <View style={styles.loginButtonContainer}>
@@ -61,8 +64,8 @@ const styles = StyleSheet.create({
     alignItems: "center",
     width: "50%",
     height: 70,
-    backgroundColor: COLOR.BLUE,
     borderRadius: 100,
+    backgroundColor: COLOR.BLUE,
   },
   startButtonText: {
     color: COLOR.WHITE,

@@ -1,4 +1,4 @@
-import React from "react";
+import React, { useState } from "react";
 import {
   View,
   Text,
@@ -8,9 +8,16 @@ import {
 } from "react-native";
 import { SafeAreaView } from "react-native-safe-area-context";
 
+import { SearchListModal } from "../components/SearchListModal";
+import { FavoritesListModal } from "../components/FavoritesListModal";
+
 import { COLOR } from "../api/constants";
 
 const Arrival = () => {
+  const [isSearchListModalOpen, setIsSearchListModalOpen] = useState(false);
+  const [isFavoritesListModalOpen, setIsFavoritesListModalOpen] =
+    useState(false);
+
   return (
     <SafeAreaView style={styles.container}>
       <View style={styles.screenContainer}>
@@ -19,14 +26,28 @@ const Arrival = () => {
             style={styles.searchTextInput}
             placeholder="목적지를 설정해주세요."
           />
-          <TouchableOpacity style={styles.searchButton}>
+          <TouchableOpacity
+            style={styles.searchButton}
+            onPress={() => setIsSearchListModalOpen(true)}
+          >
             <Text style={styles.searchButtonText}>검색</Text>
           </TouchableOpacity>
         </View>
-        <TouchableOpacity style={styles.favoritesButton}>
+        <TouchableOpacity
+          style={styles.favoritesButton}
+          onPress={() => setIsFavoritesListModalOpen(true)}
+        >
           <Text style={styles.favoritesButtonText}>즐겨찾기 목록</Text>
         </TouchableOpacity>
       </View>
+      <SearchListModal
+        isSearchListModalOpen={isSearchListModalOpen}
+        setIsSearchListModalOpen={setIsSearchListModalOpen}
+      />
+      <FavoritesListModal
+        isFavoritesListModalOpen={isFavoritesListModalOpen}
+        setIsFavoritesListModalOpen={setIsFavoritesListModalOpen}
+      />
     </SafeAreaView>
   );
 };
