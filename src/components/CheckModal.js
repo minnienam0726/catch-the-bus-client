@@ -11,7 +11,7 @@ const CheckModal = ({
 }) => {
   const MOCK_DATA = {
     STATION: "방배역\n01-123",
-    NUMBER: 1234,
+    NUMBER: 12345,
   };
 
   const handleVerifyNumber = () => {
@@ -23,41 +23,33 @@ const CheckModal = ({
   };
 
   return (
-    <>
-      <View style={styles.screenContainer}>
-        <Modal
-          visible={isCheckModalOpen}
-          animationType="fade"
-          transparent={true}
-        >
-          <View style={styles.screenContainer}>
-            <View style={styles.modalContainer}>
-              <Text style={styles.checkText}>
-                촬영한 번호가 아래와 같습니까?
-              </Text>
-              <Text style={styles.returnValueText}>{MOCK_DATA.STATION}</Text>
-              <View style={styles.buttonsContainer}>
-                <TouchableOpacity
-                  style={styles.backButton}
-                  onPress={() => setIsCheckModalOpen(false)}
-                >
-                  <Text style={styles.backButtonText}>다시</Text>
-                </TouchableOpacity>
-                <TouchableOpacity
-                  style={styles.checkButton}
-                  onPress={() => {
-                    handleVerifyNumber();
-                    setIsCheckModalOpen(false);
-                  }}
-                >
-                  <Text style={styles.checkButtonText}>확인</Text>
-                </TouchableOpacity>
-              </View>
+    <View style={styles.screenContainer}>
+      <Modal visible={isCheckModalOpen} animationType="fade" transparent={true}>
+        <View style={styles.screenContainer}>
+          <View style={styles.modalContainer}>
+            <Text style={styles.checkText}>촬영한 번호가 아래와 같습니까?</Text>
+            <Text style={styles.returnValueText}>{MOCK_DATA.STATION}</Text>
+            <View style={styles.buttonsContainer}>
+              <TouchableOpacity
+                style={styles.backButton}
+                onPress={() => setIsCheckModalOpen(false)}
+              >
+                <Text style={styles.backButtonText}>다시</Text>
+              </TouchableOpacity>
+              <TouchableOpacity
+                style={styles.checkButton}
+                onPress={() => {
+                  handleVerifyNumber();
+                  setIsCheckModalOpen(false);
+                }}
+              >
+                <Text style={styles.checkButtonText}>확인</Text>
+              </TouchableOpacity>
             </View>
           </View>
-        </Modal>
-      </View>
-    </>
+        </View>
+      </Modal>
+    </View>
   );
 };
 
