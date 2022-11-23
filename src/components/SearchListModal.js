@@ -6,9 +6,8 @@ import { COLOR, STAR } from "../api/constants";
 const SearchListModal = ({
   isSearchListModalOpen,
   setIsSearchListModalOpen,
+  searchList,
 }) => {
-  const MOCK_DATA = "방배역";
-
   return (
     <View style={styles.screenContainer}>
       <Modal
@@ -19,11 +18,19 @@ const SearchListModal = ({
         <View style={styles.screenContainer}>
           <View style={styles.modalContainer}>
             <Text style={styles.titleText}>관련 검색어</Text>
-            <View style={styles.returnValueContainer}>
-              <Text style={styles.returnValueText}>{MOCK_DATA}</Text>
-              <TouchableOpacity style={styles.favoriteButton}>
-                <Text style={styles.favoriteButtonText}>{STAR.EMPTY_STAR}</Text>
-              </TouchableOpacity>
+            <View>
+              {searchList.map((searchResult, key) => {
+                return (
+                  <View style={styles.returnValueContainer} key={searchResult}>
+                    <Text style={styles.returnValueText}>{searchResult}</Text>
+                    <TouchableOpacity style={styles.favoriteButton}>
+                      <Text style={styles.favoriteButtonText}>
+                        {STAR.EMPTY_STAR}
+                      </Text>
+                    </TouchableOpacity>
+                  </View>
+                );
+              })}
             </View>
             <TouchableOpacity
               style={styles.closeButton}
@@ -60,15 +67,18 @@ const styles = StyleSheet.create({
   returnValueContainer: {
     flexDirection: "row",
     justifyContent: "space-between",
+    alignItems: "center",
     width: "100%",
   },
   returnValueText: {
     width: "80%",
+    height: 35,
     marginVertical: 10,
     backgroundColor: COLOR.WHITE,
     color: COLOR.BLACK,
     textAlign: "center",
-    fontSize: 25,
+    textAlignVertical: "center",
+    fontSize: 16,
   },
   favoriteButton: {
     justifyContent: "center",

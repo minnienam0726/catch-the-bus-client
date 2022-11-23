@@ -17,6 +17,23 @@ const Arrival = () => {
   const [isSearchListModalOpen, setIsSearchListModalOpen] = useState(false);
   const [isFavoritesListModalOpen, setIsFavoritesListModalOpen] =
     useState(false);
+  const [text, setText] = useState("");
+  const [searchList, setSearchList] = useState([]);
+
+  const handleSubmit = () => {
+    fetch(SERVER_URL, {
+      method: "POST",
+      headers: {
+        "Content-Type": "application/json",
+      },
+      body: JSON.stringify({ text }),
+    })
+      .then(async (response) => {
+        const jsonResponse = await response.json();
+        setSearchList(jsonResponse.payload);
+      })
+      .catch((error) => console.log(error));
+  };
 
   return (
     <SafeAreaView style={styles.container}>
@@ -25,10 +42,14 @@ const Arrival = () => {
           <TextInput
             style={styles.searchTextInput}
             placeholder="목적지를 설정해주세요."
+            onChangeText={setText}
           />
           <TouchableOpacity
             style={styles.searchButton}
-            onPress={() => setIsSearchListModalOpen(true)}
+            onPress={() => {
+              handleSubmit();
+              setIsSearchListModalOpen(true);
+            }}
           >
             <Text style={styles.searchButtonText}>검색</Text>
           </TouchableOpacity>
@@ -43,6 +64,7 @@ const Arrival = () => {
       <SearchListModal
         isSearchListModalOpen={isSearchListModalOpen}
         setIsSearchListModalOpen={setIsSearchListModalOpen}
+        searchList={searchList}
       />
       <FavoritesListModal
         isFavoritesListModalOpen={isFavoritesListModalOpen}

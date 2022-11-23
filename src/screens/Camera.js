@@ -1,4 +1,4 @@
-import React, { useState } from "react";
+import React, { useEffect, useState } from "react";
 import { View, Text, StyleSheet, TouchableOpacity } from "react-native";
 import { SafeAreaView } from "react-native-safe-area-context";
 
@@ -15,6 +15,16 @@ const Camera = ({ navigation }) => {
   const [navigateHome, setNavigateHome] = useState(false);
   const [navigateArrival, setNavigateArrival] = useState(false);
 
+  useEffect(() => {
+    if (navigateHome) {
+      return navigation.goBack();
+    }
+
+    if (navigateArrival) {
+      return navigation.navigate("Arrival");
+    }
+  });
+
   return (
     <SafeAreaView style={styles.container}>
       <View style={styles.screenContainer}>
@@ -27,8 +37,6 @@ const Camera = ({ navigation }) => {
           <Text style={styles.detectionButtonText}>인식하기</Text>
         </TouchableOpacity>
       </View>
-      {navigateHome && navigation.goBack()}
-      {navigateArrival && navigation.navigate("Arrival")}
       <GuideModal
         isGuideModalOpen={isGuideModalOpen}
         setIsGuideModalOpen={setIsGuideModalOpen}
