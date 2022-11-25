@@ -14,6 +14,28 @@ const Camera = ({ navigation }) => {
   const [isSearchResultModalOpen, setIsSearchResultModalOpen] = useState(false);
   const [navigateHome, setNavigateHome] = useState(false);
   const [navigateArrival, setNavigateArrival] = useState(false);
+  const [searchResult, setSearchResult] = useState({});
+
+  const MOCK_DATA = {
+    departure: "동묘앞",
+    arrival: "숭례문",
+    capturedNumber: "105",
+  };
+
+  const handleSubmit = () => {
+    fetch(SERVER_URL, {
+      method: "POST",
+      headers: {
+        "Content-Type": "application/json",
+      },
+      body: JSON.stringify({ MOCK_DATA }),
+    })
+      .then(async (response) => {
+        const jsonResponse = await response.json();
+        setSearchResult(jsonResponse.payload);
+      })
+      .catch((error) => console.log(error));
+  };
 
   useEffect(() => {
     if (navigateHome) {
@@ -51,6 +73,7 @@ const Camera = ({ navigation }) => {
         isSearchResultModalOpen={isSearchResultModalOpen}
         setIsSearchResultModalOpen={setIsSearchResultModalOpen}
         setNavigateHome={setNavigateHome}
+        searchResult={searchResult}
       />
     </SafeAreaView>
   );
