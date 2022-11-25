@@ -7,6 +7,7 @@ const SearchResultModal = ({
   isSearchResultModalOpen,
   setIsSearchResultModalOpen,
   setNavigateHome,
+  searchResult,
 }) => {
   const MOCK_DATA = "1001";
 
