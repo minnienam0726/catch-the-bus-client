@@ -1,10 +1,43 @@
-import React from "react";
+import React, { useState } from "react";
 import { View, Text, StyleSheet, TouchableOpacity } from "react-native";
 import { SafeAreaView } from "react-native-safe-area-context";
+import Geolocation from "react-native-geolocation-service";
 
 import { COLOR } from "../api/constants";
 
 const Home = ({ navigation }) => {
+  const [location, setLocation] = useState(false);
+  const [geolocation, setGeolocation] = useState({});
+
+  const getLocation = () => {
+    Geolocation.getCurrentPosition(
+      (position) => {
+        setLocation(position);
+      },
+      (error) => {
+        console.log(error.code, error.message);
+        setLocation(false);
+      },
+      { enableHighAccuracy: true, timeout: 10000, maximumAge: 10000 },
+    );
+    setGeolocation(location);
+  };
+
+  const getStation = () => {
+    fetch(SERVER_URL, {
+      method: "POST",
+      headers: {
+        "Content-Type": "application/json",
+      },
+      body: JSON.stringify({ geolocation }),
+    })
+      .then(async (response) => {
+        const jsonResponse = await response.json();
+        setGeolocation(jsonResponse.payload);
+      })
+      .catch((error) => console.log(error));
+  };
+
   return (
     <SafeAreaView style={styles.container}>
       <View style={styles.screenContainer}>
@@ -15,18 +48,14 @@ const Home = ({ navigation }) => {
         </View>
         <TouchableOpacity
           style={styles.startButton}
-          onPress={() => navigation.navigate("Camera")}
+          onPress={() => {
+            navigation.navigate("TextDetection");
+            getLocation();
+            getStation();
+          }}
         >
           <Text style={styles.startButtonText}>출발하기</Text>
         </TouchableOpacity>
-        <View style={styles.loginButtonContainer}>
-          <TouchableOpacity style={styles.loginButton}>
-            <Text style={styles.loginButtonText}>카카오톡 로그인</Text>
-          </TouchableOpacity>
-          <Text style={styles.loginText}>
-            로그인 후 즐겨찾기 사용이 가능합니다.
-          </Text>
-        </View>
       </View>
     </SafeAreaView>
   );
@@ -37,7 +66,7 @@ const styles = StyleSheet.create({
     flex: 1,
   },
   screenContainer: {
-    justifyContent: "space-around",
+    justifyContent: "space-between",
     alignItems: "center",
     width: "100%",
     height: "100%",
@@ -70,25 +99,6 @@ const styles = StyleSheet.create({
   startButtonText: {
     color: COLOR.WHITE,
     fontSize: 20,
-  },
-  loginButtonContainer: {
-    justifyContent: "center",
-    alignItems: "center",
-    width: "100%",
-  },
-  loginButton: {
-    justifyContent: "center",
-    alignItems: "center",
-    width: "50%",
-    height: 70,
-    backgroundColor: COLOR.YELLOW,
-  },
-  loginButtonText: {
-    color: COLOR.BLACK,
-    fontSize: 20,
-  },
-  loginText: {
-    paddingTop: 10,
   },
 });
 
