@@ -8,6 +8,12 @@ export const COLOR = {
   YELLOW: "#FFFF00",
 };
 
+export const FONTSIZE = {
+  LARGE: 25,
+  MEDIUM: 20,
+  SMALL: 15,
+};
+
 export const STAR = {
   EMPTY_STAR: "☆",
   FULFILLED_STAR: "★",

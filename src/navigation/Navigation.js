@@ -3,8 +3,9 @@ import { NavigationContainer } from "@react-navigation/native";
 import { createNativeStackNavigator } from "@react-navigation/native-stack";
 
 import { Home } from "../screens/Home";
-import { Camera } from "../screens/Camera";
+import { Departure } from "../screens/Departure";
 import { Arrival } from "../screens/Arrival";
+import { Result } from "../screens/Result";
 
 const Stack = createNativeStackNavigator();
 
@@ -12,9 +13,10 @@ const Navigation = () => {
   return (
     <NavigationContainer>
       <Stack.Navigator initialRouteName="Home">
-        <Stack.Screen name="Catch the bus" component={Home} />
-        <Stack.Screen name="Camera" component={Camera} />
+        <Stack.Screen name="Home" component={Home} />
+        <Stack.Screen name="Departure" component={Departure} />
         <Stack.Screen name="Arrival" component={Arrival} />
+        <Stack.Screen name="Result" component={Result} />
       </Stack.Navigator>
     </NavigationContainer>
   );

@@ -1,27 +1,23 @@
-import React, { useState } from "react";
+import React, { useEffect, useState } from "react";
 import {
   View,
   Text,
   TextInput,
-  StyleSheet,
   TouchableOpacity,
+  ScrollView,
+  StyleSheet,
 } from "react-native";
 import { SafeAreaView } from "react-native-safe-area-context";
 
-import { SearchListModal } from "../components/SearchListModal";
-import { FavoritesListModal } from "../components/FavoritesListModal";
+import { COLOR, FONTSIZE } from "../api/constants";
 
-import { COLOR } from "../api/constants";
-
-const Arrival = () => {
-  const [isSearchListModalOpen, setIsSearchListModalOpen] = useState(false);
-  const [isFavoritesListModalOpen, setIsFavoritesListModalOpen] =
-    useState(false);
+const Arrival = ({ route, navigation }) => {
   const [text, setText] = useState("");
   const [searchList, setSearchList] = useState([]);
+  const { departure } = route.params;
 
-  const handleSubmit = () => {
-    fetch(SERVER_URL, {
+  useEffect(() => {
+    fetch(`${SERVER_URI}/search/station`, {
       method: "POST",
       headers: {
         "Content-Type": "application/json",
@@ -33,43 +29,39 @@ const Arrival = () => {
         setSearchList(jsonResponse.payload);
       })
       .catch((error) => console.log(error));
-  };
+  }, [text]);
 
   return (
     <SafeAreaView style={styles.container}>
       <View style={styles.screenContainer}>
-        <View style={styles.searchContainer}>
-          <TextInput
-            style={styles.searchTextInput}
-            placeholder="목적지를 설정해주세요."
-            onChangeText={setText}
-          />
-          <TouchableOpacity
-            style={styles.searchButton}
-            onPress={() => {
-              handleSubmit();
-              setIsSearchListModalOpen(true);
-            }}
-          >
-            <Text style={styles.searchButtonText}>검색</Text>
-          </TouchableOpacity>
-        </View>
-        <TouchableOpacity
-          style={styles.favoritesButton}
-          onPress={() => setIsFavoritesListModalOpen(true)}
-        >
-          <Text style={styles.favoritesButtonText}>즐겨찾기 목록</Text>
-        </TouchableOpacity>
+        <TextInput
+          style={styles.searchTextInput}
+          placeholder="목적지를 검색하세요."
+          onChangeText={setText}
+        />
+        <ScrollView style={styles.scrollView}>
+          <View style={styles.researchResultContainer}>
+            {searchList.map((station, key) => {
+              return (
+                <TouchableOpacity
+                  style={styles.stationButton}
+                  key={station}
+                  onPress={() => {
+                    navigation.navigate("Result", {
+                      stations: {
+                        departure: departure,
+                        arrival: station,
+                      },
+                    });
+                  }}
+                >
+                  <Text style={styles.stationText}>{station}</Text>
+                </TouchableOpacity>
+              );
+            })}
+          </View>
+        </ScrollView>
       </View>
-      <SearchListModal
-        isSearchListModalOpen={isSearchListModalOpen}
-        setIsSearchListModalOpen={setIsSearchListModalOpen}
-        searchList={searchList}
-      />
-      <FavoritesListModal
-        isFavoritesListModalOpen={isFavoritesListModalOpen}
-        setIsFavoritesListModalOpen={setIsFavoritesListModalOpen}
-      />
     </SafeAreaView>
   );
 };
@@ -84,38 +76,29 @@ const styles = StyleSheet.create({
     width: "100%",
     height: "100%",
   },
-  searchContainer: {
-    flexDirection: "row",
-    justifyContent: "space-between",
-    width: "70%",
-  },
   searchTextInput: {
     width: "70%",
     borderWidth: 1,
     fontSize: 16,
   },
-  searchButton: {
-    justifyContent: "center",
-    alignItems: "center",
-    width: "25%",
-    backgroundColor: COLOR.BLUE,
-  },
-  searchButtonText: {
-    color: COLOR.WHITE,
-    fontSize: 20,
-  },
-  favoritesButton: {
-    justifyContent: "center",
-    alignItems: "center",
+  scrollView: {
     width: "70%",
-    height: 50,
-    marginTop: "20%",
-    borderWidth: 1,
-    backgroundColor: COLOR.PINK,
+    backgroundColor: COLOR.GRAY,
+    padding: 10,
   },
-  favoritesButtonText: {
-    color: COLOR.BLACK,
-    fontSize: 20,
+  researchResultContainer: {
+    justifyContent: "space-around",
+    width: "70%",
+  },
+  stationButton: {
+    justifyContent: "center",
+    alignItems: "center",
+    height: 50,
+    marginVertical: 5,
+  },
+  stationText: {
+    color: COLOR.WHITE,
+    fontSize: FONTSIZE.MEDIUM,
   },
 });
 
