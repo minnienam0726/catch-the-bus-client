@@ -13,8 +13,3 @@ export const FONTSIZE = {
   MEDIUM: 20,
   SMALL: 15,
 };
-
-export const STAR = {
-  EMPTY_STAR: "☆",
-  FULFILLED_STAR: "★",
-};

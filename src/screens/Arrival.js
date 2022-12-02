@@ -9,7 +9,7 @@ import {
 } from "react-native";
 import { SafeAreaView } from "react-native-safe-area-context";
 
-import { COLOR, FONTSIZE } from "../api/constants";
+import { COLOR, FONTSIZE } from "../config/constants";
 
 const Arrival = ({ route, navigation }) => {
   const [text, setText] = useState("");
@@ -18,7 +18,7 @@ const Arrival = ({ route, navigation }) => {
 
   useEffect(() => {
     fetch(`${SERVER_URI}/search/station`, {
-      method: "POST",
+      method: "PUT",
       headers: {
         "Content-Type": "application/json",
       },
@@ -98,7 +98,7 @@ const styles = StyleSheet.create({
   },
   stationText: {
     color: COLOR.WHITE,
-    fontSize: FONTSIZE.MEDIUM,
+    fontSize: FONTSIZE.SMALL,
   },
 });
 
