@@ -2,7 +2,9 @@ import React from "react";
 import { View, Text, TouchableOpacity, StyleSheet } from "react-native";
 import { SafeAreaView } from "react-native-safe-area-context";
 
-import { COLOR, FONTSIZE } from "../api/constants";
+import { requestLocationPermission } from "../utils/getPermission";
+
+import { COLOR, FONTSIZE } from "../config/constants";
 
 const Home = ({ navigation }) => {
   return (
@@ -16,6 +18,7 @@ const Home = ({ navigation }) => {
         <TouchableOpacity
           style={styles.startButton}
           onPress={() => {
+            requestLocationPermission();
             navigation.navigate("Departure");
           }}
         >

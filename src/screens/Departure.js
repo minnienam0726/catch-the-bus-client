@@ -3,7 +3,7 @@ import { View, Text, TouchableOpacity, StyleSheet } from "react-native";
 import { SafeAreaView } from "react-native-safe-area-context";
 import Geolocation from "react-native-geolocation-service";
 
-import { COLOR, FONTSIZE } from "../api/constants";
+import { COLOR, FONTSIZE } from "../config/constants";
 
 const Departure = ({ navigation }) => {
   const [geolocation, setGeolocation] = useState({});
@@ -22,7 +22,7 @@ const Departure = ({ navigation }) => {
     );
 
     fetch(`${SERVER_URI}/geolocation`, {
-      method: "POST",
+      method: "PUT",
       headers: {
         "Content-Type": "application/json",
       },

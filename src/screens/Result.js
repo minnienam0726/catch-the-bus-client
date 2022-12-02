@@ -9,26 +9,30 @@ import {
 } from "react-native";
 import { SafeAreaView } from "react-native-safe-area-context";
 
-import { COLOR, FONTSIZE } from "../api/constants";
+import { COLOR, FONTSIZE } from "../config/constants";
 
 const Result = ({ route, navigation }) => {
   const [boardingBus, setBoardingBus] = useState({});
   const [navigateHome, setNavigateHome] = useState(false);
   const [text, setText] = useState("");
-  const [answer, setAnswer] = useState("");
+  const [message, setMessage] = useState("");
   const { stations } = route.params;
 
   const busRoute = Object.entries(boardingBus);
   const busNumber = Object.keys(boardingBus);
-  const searchNumber = busNumber.filter((number) => number == text);
+  const searchNumber = busNumber.filter((number) => number === text);
 
   useEffect(() => {
-    searchNumber[0] ? setAnswer("타세요!") : setAnswer("");
+    if (searchNumber.length === 0) {
+      return setMessage("");
+    }
+
+    return setMessage("타세요!");
   }, [searchNumber]);
 
   useEffect(() => {
     fetch(`${SERVER_URI}/search/bus`, {
-      method: "POST",
+      method: "PUT",
       headers: {
         "Content-Type": "application/json",
       },
@@ -51,7 +55,7 @@ const Result = ({ route, navigation }) => {
     <SafeAreaView style={styles.container}>
       <View style={styles.screenContainer}>
         <Text style={styles.message}>
-          {busNumber ? "이 버스를 탑승하세요!" : "직행 버스가 없습니다!"}
+          {busNumber.length ? "이 버스에 탑승하세요!" : "직행 버스가 없습니다!"}
         </Text>
         <ScrollView style={styles.scrollView}>
           <View>
@@ -66,10 +70,10 @@ const Result = ({ route, navigation }) => {
         </ScrollView>
         <TextInput
           style={styles.searchTextInput}
-          placeholder="이 버스가 갈까요?"
+          placeholder="이 버스가 목적지에 갈까요?"
           onChangeText={setText}
         />
-        <Text style={styles.answerText}>{answer}</Text>
+        <Text style={styles.messageText}>{message}</Text>
         <TouchableOpacity
           style={styles.homeButton}
           onPress={() => {
@@ -93,7 +97,6 @@ const styles = StyleSheet.create({
     width: "100%",
     height: "100%",
   },
-
   message: {
     margin: 20,
     color: COLOR.BLACK,
@@ -115,7 +118,7 @@ const styles = StyleSheet.create({
     borderWidth: 1,
     fontSize: 16,
   },
-  answerText: {
+  messageText: {
     color: COLOR.RED,
     fontSize: FONTSIZE.SMALL,
   },
@@ -124,7 +127,7 @@ const styles = StyleSheet.create({
     alignItems: "center",
     width: 150,
     height: 50,
-    marginTop: 30,
+    marginBottom: 30,
     borderRadius: 100,
     backgroundColor: COLOR.BLUE,
   },
