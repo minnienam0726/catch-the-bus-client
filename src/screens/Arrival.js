@@ -18,7 +18,7 @@ const Arrival = ({ route, navigation }) => {
 
   useEffect(() => {
     fetch(`${SERVER_URI}/search/station`, {
-      method: "PUT",
+      method: "POST",
       headers: {
         "Content-Type": "application/json",
       },
