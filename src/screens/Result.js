@@ -15,7 +15,8 @@ const Result = ({ route, navigation }) => {
   const [boardingBus, setBoardingBus] = useState({});
   const [navigateHome, setNavigateHome] = useState(false);
   const [text, setText] = useState("");
-  const [message, setMessage] = useState("");
+  const [guideMessage, setGuideMessage] = useState("");
+  const [resultMessage, setResultMessage] = useState("");
   const { stations } = route.params;
 
   const busRoute = Object.entries(boardingBus);
@@ -23,16 +24,8 @@ const Result = ({ route, navigation }) => {
   const searchNumber = busNumber.filter((number) => number === text);
 
   useEffect(() => {
-    if (searchNumber.length === 0) {
-      return setMessage("");
-    }
-
-    return setMessage("타세요!");
-  }, [searchNumber]);
-
-  useEffect(() => {
     fetch(`${SERVER_URI}/search/bus`, {
-      method: "PUT",
+      method: "POST",
       headers: {
         "Content-Type": "application/json",
       },
@@ -40,10 +33,21 @@ const Result = ({ route, navigation }) => {
     })
       .then(async (response) => {
         const jsonResponse = await response.json();
-        setBoardingBus(jsonResponse.payload);
+        if (jsonResponse.payload) {
+          setBoardingBus(jsonResponse.payload);
+        }
+        setGuideMessage(jsonResponse.message);
       })
       .catch((error) => console.log(error));
   }, []);
+
+  useEffect(() => {
+    if (searchNumber.length === 0) {
+      return setResultMessage("");
+    }
+
+    return setResultMessage("타세요!");
+  }, [searchNumber]);
 
   useEffect(() => {
     if (navigateHome) {
@@ -55,7 +59,9 @@ const Result = ({ route, navigation }) => {
     <SafeAreaView style={styles.container}>
       <View style={styles.screenContainer}>
         <Text style={styles.message}>
-          {busNumber.length ? "이 버스에 탑승하세요!" : "직행 버스가 없습니다!"}
+          {Array.isArray(busNumber) && busNumber.length
+            ? "이 버스에 탑승하세요!"
+            : guideMessage}
         </Text>
         <ScrollView style={styles.scrollView}>
           <View>
@@ -73,7 +79,7 @@ const Result = ({ route, navigation }) => {
           placeholder="이 버스가 목적지에 갈까요?"
           onChangeText={setText}
         />
-        <Text style={styles.messageText}>{message}</Text>
+        <Text style={styles.resultMessageText}>{resultMessage}</Text>
         <TouchableOpacity
           style={styles.homeButton}
           onPress={() => {
@@ -118,7 +124,7 @@ const styles = StyleSheet.create({
     borderWidth: 1,
     fontSize: 16,
   },
-  messageText: {
+  resultMessageText: {
     color: COLOR.RED,
     fontSize: FONTSIZE.SMALL,
   },

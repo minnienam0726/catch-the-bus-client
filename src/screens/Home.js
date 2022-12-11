@@ -17,6 +17,7 @@ const Home = ({ navigation }) => {
         </View>
         <TouchableOpacity
           style={styles.startButton}
+          testID="startButton"
           onPress={() => {
             requestLocationPermission();
             navigation.navigate("Departure");

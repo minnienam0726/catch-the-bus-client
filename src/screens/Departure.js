@@ -8,6 +8,7 @@ import { COLOR, FONTSIZE } from "../config/constants";
 const Departure = ({ navigation }) => {
   const [geolocation, setGeolocation] = useState({});
   const [departure, setDeparture] = useState([]);
+  const [message, setMessage] = useState("");
 
   const handleSubmit = () => {
     Geolocation.getCurrentPosition(
@@ -22,7 +23,7 @@ const Departure = ({ navigation }) => {
     );
 
     fetch(`${SERVER_URI}/geolocation`, {
-      method: "PUT",
+      method: "POST",
       headers: {
         "Content-Type": "application/json",
       },
@@ -30,7 +31,10 @@ const Departure = ({ navigation }) => {
     })
       .then(async (response) => {
         const jsonResponse = await response.json();
-        setDeparture(jsonResponse.payload);
+        if (jsonResponse.payload) {
+          setDeparture(jsonResponse.payload);
+        }
+        setMessage(jsonResponse.message);
       })
       .catch((error) => console.log(error));
   };
@@ -39,22 +43,27 @@ const Departure = ({ navigation }) => {
     <SafeAreaView style={StyleSheet.container}>
       <View style={styles.screenContainer}>
         <View style={styles.researchResultContainer}>
-          {departure.map((station, key) => {
-            return (
-              <TouchableOpacity
-                style={styles.stationButton}
-                key={station}
-                onPress={() =>
-                  navigation.navigate("Arrival", { departure: station })
-                }
-              >
-                <Text style={styles.stationText}>{station}</Text>
-              </TouchableOpacity>
-            );
-          })}
+          {Array.isArray(departure) && departure.length > 0 ? (
+            departure.map((station, key) => {
+              return (
+                <TouchableOpacity
+                  style={styles.stationButton}
+                  key={station}
+                  onPress={() =>
+                    navigation.navigate("Arrival", { departure: station })
+                  }
+                >
+                  <Text style={styles.stationText}>{station}</Text>
+                </TouchableOpacity>
+              );
+            })
+          ) : (
+            <Text style={styles.messageText}>{message}</Text>
+          )}
         </View>
         <TouchableOpacity
           style={styles.searchButton}
+          testID="stationCheckButton"
           onPress={() => handleSubmit()}
         >
           <Text style={styles.searchText}>내 주변 정류장 확인하기</Text>
@@ -77,6 +86,11 @@ const styles = StyleSheet.create({
   researchResultContainer: {
     justifyContent: "space-around",
     width: "70%",
+  },
+  messageText: {
+    textAlign: "center",
+    color: COLOR.RED,
+    fontSize: FONTSIZE.MEDIUM,
   },
   stationButton: {
     justifyContent: "center",
