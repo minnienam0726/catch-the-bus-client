@@ -1,0 +1,106 @@
+// Jest Snapshot v1, https://goo.gl/fbAQLP
+
+exports[`Home 스크린 Home 스크린 정상 렌더링 1`] = `
+<RNCSafeAreaView
+  edges={
+    [
+      "bottom",
+      "left",
+      "right",
+      "top",
+    ]
+  }
+  style={
+    {
+      "flex": 1,
+    }
+  }
+>
+  <View
+    style={
+      {
+        "alignItems": "center",
+        "height": "100%",
+        "justifyContent": "space-around",
+        "width": "100%",
+      }
+    }
+  >
+    <View
+      style={
+        {
+          "width": "70%",
+        }
+      }
+    >
+      <Text
+        style={
+          {
+            "fontSize": 20,
+            "paddingBottom": 5,
+            "textAlign": "left",
+          }
+        }
+      >
+        서울
+      </Text>
+      <Text
+        style={
+          {
+            "fontSize": 40,
+            "textAlign": "left",
+          }
+        }
+      >
+        버스 기사님,
+      </Text>
+      <Text
+        style={
+          {
+            "fontSize": 30,
+            "paddingTop": 5,
+            "textAlign": "right",
+          }
+        }
+      >
+        *** 가시나요?
+      </Text>
+    </View>
+    <View
+      accessible={true}
+      collapsable={false}
+      focusable={true}
+      onClick={[Function]}
+      onResponderGrant={[Function]}
+      onResponderMove={[Function]}
+      onResponderRelease={[Function]}
+      onResponderTerminate={[Function]}
+      onResponderTerminationRequest={[Function]}
+      onStartShouldSetResponder={[Function]}
+      style={
+        {
+          "alignItems": "center",
+          "backgroundColor": "#007AFF",
+          "borderRadius": 100,
+          "height": 70,
+          "justifyContent": "center",
+          "opacity": 1,
+          "width": "50%",
+        }
+      }
+      testID="startButton"
+    >
+      <Text
+        style={
+          {
+            "color": "#FFFFFF",
+            "fontSize": 20,
+          }
+        }
+      >
+        출발하기
+      </Text>
+    </View>
+  </View>
+</RNCSafeAreaView>
+`;
